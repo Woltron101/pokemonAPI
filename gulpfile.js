@@ -51,7 +51,7 @@ var path = {
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
-    clean: './build'
+    clean: './dist'
 };
 
 gulp.task('webserver', function() {
@@ -81,7 +81,6 @@ gulp.task('js', function() {
             'src/js/controllers/mainCtrl.js',
             'src/js/controllers/pokemonsCtrl.js',
             'src/js/controllers/favoritesCtrl.js'
-            'src/js/filters/filterByType.js'
         ])
         .pipe(concat('main.js'))
         .pipe(uglify())

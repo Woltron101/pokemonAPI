@@ -7,7 +7,7 @@
 				<h3>{{pokemon.name}}</h3>
 			</div>
 			<span ng-repeat="type in pokemon.types" class="{{type.name}} type" ng-click="main.selectType(type.name)">{{type.name}}</span>
-			<hr>
+			<div class="clearfix"></div>
 			<button class="btn btn-primary" ng-click="main.addToFavorites(pokemon)" ng-if="!pokemon.favorite">Add to favorites</button>
 			<button class="btn btn-primary" ng-click="main.removeFromFavorites(pokemon)" ng-if="pokemon.favorite">Remove from favorites</button>
 		</div>

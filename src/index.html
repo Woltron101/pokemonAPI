@@ -8,10 +8,6 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.1/ui-bootstrap.min.js"></script>
-	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.3.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
 	<script src="js/main.js"></script>
@@ -23,10 +19,10 @@
 		<a ui-sref="pokemons" class="btn btn-default">Pokemons</a>
 		<a ui-sref="favorites" class="btn btn-default">Favorites</a>
 		<hr>
-		<select ng-model="main.type">
+		<!-- <select ng-model="main.type">
 			<option value=""></option>
 			<option ng-repeat="option in main.options" value="{{option}}">{{option}}</option>
-		</select>
+		</select> -->
 	</div>
 	<div ui-view></div>
 	<div ng-include="'templates/modal.html'"></div>

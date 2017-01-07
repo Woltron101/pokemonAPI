@@ -1,4 +1,4 @@
-const mainCtrl = pokemon.controller('mainCtrl', ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
+const mainCtrl = pokemon.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$localStorage', function($scope, $rootScope, $http, $localStorage) {
 	const vm = this;
 	vm.options = ["Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric", "Ice", "Dragon", "Dark", "Fairy", "Unknown", "Shadow", "Psychic"];
 	vm.type = "";
@@ -48,4 +48,8 @@ const mainCtrl = pokemon.controller('mainCtrl', ['$scope', '$http', '$localStora
 	vm.selectType = function(type) {
 		vm.type = type;
 	}
+	$rootScope.$on('$stateChangeSuccess',
+		function(event, toState, toParams, fromState, fromParams) {
+			vm.type = "";
+		});
 }])
