@@ -1,4 +1,4 @@
 <div>
-	<h2 ng-if="pokemons.error" class="container">Server Error!</h2>
+	<p ng-if="pokemons.error" class="container bg-warning">Server Error! This data got from beckup.</p>
 	<div ng-include="'templates/pokemonsTpl.html'"></div>
 </div>

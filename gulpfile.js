@@ -113,7 +113,7 @@ gulp.task('img', function() {
 });
 gulp.task('beckupJson', function() {
     gulp.src('src/js/*.json')
-        .pipe(gulp.dest('dist/js/*.json'))
+        .pipe(gulp.dest('dist/js/'))
         .pipe(connect.reload());
 });
 
@@ -123,6 +123,7 @@ gulp.task('watch', function() {
     gulp.watch(path.watch.html.main, ['html:main']);
     gulp.watch(path.watch.html.templ, ['html:templ']);
     gulp.watch(path.watch.img, ['img']);
+    gulp.watch('src/js/*.json', ['beckupJson']);
 });
 
 gulp.task('build', [
@@ -130,6 +131,7 @@ gulp.task('build', [
     'html:templ',
     'js',
     'style',
-    'img'
+    'img',
+    'beckupJson'
 ]);
 gulp.task('default', ['build', 'webserver', 'watch']);
