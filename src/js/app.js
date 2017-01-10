@@ -8,15 +8,16 @@ const pokemon = angular.module('pokemon', [
 				.state('pokemons', {
 					url: '/pokemons',
 					templateUrl: 'templates/pokemons.html',
-					conteroller: 'pokemonsCtrl'
-
+					controller: 'pokemonsCtrl',
+					controllerAs: 'pokemons'
 				})
 				.state('favorites', {
 					url: '/pokemons/favorites',
 					templateUrl: 'templates/favorites.html',
-					controller: 'favoritesCtrl'
-
+					controller: 'favoritesCtrl',
+					controllerAs: 'pokemons'
 				});
+
 			$urlRouterProvider.otherwise('/pokemons');
 		}
 	])

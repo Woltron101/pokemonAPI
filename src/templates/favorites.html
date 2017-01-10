@@ -1,3 +1,4 @@
-<div ng-controller="favoritesCtrl as pokemons">
+<div>
+	<h2 ng-if="!main.favorites.length" class="container">You don’t have any favorits pokemons yet!</h2>
 	<div ng-include="'templates/pokemonsTpl.html'"></div>
 </div>

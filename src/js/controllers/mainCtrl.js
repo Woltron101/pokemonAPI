@@ -29,27 +29,18 @@ const mainCtrl = pokemon.controller('mainCtrl', ['$scope', '$rootScope', '$http'
 
 	vm.hideModal = function(e) {
 		var target = angular.element(e.target);
-
-		if (target.hasClass('popup-wrap') || target.hasClass('close')) {
+		if (target.hasClass('modal-wrap') || target.hasClass('close') || e.keyCode === 27) {
 			vm.modal.active = false;
 		}
 	}
 
-	vm.selectItems = function(pokemons) {
-		return pokemons.forEach(function(element) {
-			if (element.types.name == vm.type) {
-				return pokemon;
-			} else {
-				return false;
-			}
-		});
-	};
-
 	vm.selectType = function(type) {
 		vm.type = type;
 	}
-	$rootScope.$on('$stateChangeSuccess',
-		function(event, toState, toParams, fromState, fromParams) {
-			vm.type = "";
-		});
+
+	$rootScope.$on('$stateChangeSuccess', resetType());
+
+	function resetType() {
+		vm.type = "";
+	}
 }])

@@ -83,7 +83,7 @@ gulp.task('js', function() {
             'src/js/controllers/favoritesCtrl.js'
         ])
         .pipe(concat('main.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(gulp.dest(path.dist.js))
         .pipe(connect.reload());
 });
@@ -106,18 +106,30 @@ gulp.task('style', function() {
         .pipe(gulp.dest(path.dist.css))
         .pipe(connect.reload());
 });
+gulp.task('img', function() {
+    gulp.src(path.src.img)
+        .pipe(gulp.dest(path.dist.img))
+        .pipe(connect.reload());
+});
+gulp.task('beckupJson', function() {
+    gulp.src('src/js/*.json')
+        .pipe(gulp.dest('dist/js/*.json'))
+        .pipe(connect.reload());
+});
 
 gulp.task('watch', function() {
     gulp.watch(path.watch.style.main, ['style']);
     gulp.watch(path.watch.js.main, ['js']);
     gulp.watch(path.watch.html.main, ['html:main']);
     gulp.watch(path.watch.html.templ, ['html:templ']);
+    gulp.watch(path.watch.img, ['img']);
 });
 
 gulp.task('build', [
     'html:main',
     'html:templ',
     'js',
-    'style'
+    'style',
+    'img'
 ]);
 gulp.task('default', ['build', 'webserver', 'watch']);

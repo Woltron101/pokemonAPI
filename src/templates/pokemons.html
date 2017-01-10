@@ -1,3 +1,4 @@
-<div ng-controller="pokemonsCtrl as pokemons">
+<div>
+	<h2 ng-if="pokemons.error" class="container">Server Error!</h2>
 	<div ng-include="'templates/pokemonsTpl.html'"></div>
 </div>

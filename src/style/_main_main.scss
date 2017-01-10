@@ -98,7 +98,7 @@
 
 .electric {
 	background-color: #ff0;
-	color: #fff;
+	color: #000;
 }
 
 .ice {
@@ -134,4 +134,32 @@
 .psychic {
 	background-color: #393;
 	color: #fff;
+}
+
+.fighting {
+	background-color: #969;
+	color: #fff;
+}
+
+.preloader {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.5)
+}
+
+.loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@media (max-width: 480px) {
+	.pokemon {
+		width: 100%;
+		float: none;
+	}
 }

@@ -3,26 +3,27 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<title>pokemons</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
 	<script src="js/main.js"></script>
 </head>
 
-<body ng-controller="mainCtrl as main">
+<body ng-controller="mainCtrl as main" ng-keydown="main.hideModal($event)">
 	<div class="container">
 		<hr>
 		<a ui-sref="pokemons" class="btn btn-default">Pokemons</a>
 		<a ui-sref="favorites" class="btn btn-default">Favorites</a>
+		<div ng-if="main.type" class="pull-right">
+			Current filter:
+			<span class="{{main.type}} type">{{main.type}}</span>
+			<div class="btn btn-warning" ng-click="main.type=''">Reset type filter</div>
+		</div>
 		<hr>
-		<!-- <select ng-model="main.type">
-			<option value=""></option>
-			<option ng-repeat="option in main.options" value="{{option}}">{{option}}</option>
-		</select> -->
 	</div>
 	<div ui-view></div>
 	<div ng-include="'templates/modal.html'"></div>

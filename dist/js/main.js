@@ -1,1 +1,114 @@
-const pokemon=angular.module("pokemon",["ui.router","ngStorage"]).config(["$stateProvider","$urlRouterProvider",function(o,t){o.state("pokemons",{url:"/pokemons",templateUrl:"templates/pokemons.html",conteroller:"pokemonsCtrl"}).state("favorites",{url:"/pokemons/favorites",templateUrl:"templates/favorites.html",controller:"favoritesCtrl"}),t.otherwise("/pokemons")}]),mainCtrl=pokemon.controller("mainCtrl",["$scope","$rootScope","$http","$localStorage",function(o,t,e,n){const r=this;r.options=["Normal","Fighting","Flying","Poison","Ground","Rock","Bug","Ghost","Steel","Fire","Water","Grass","Electric","Ice","Dragon","Dark","Fairy","Unknown","Shadow","Psychic"],r.type="",r.favorites=n.favorites||[],r.addToFavorites=function(o){o.favorite=!0,r.favorites.push(o),n.favorites=r.favorites},r.removeFromFavorites=function(o){o.favorite=!1,r.favorites.forEach(function(t,e){t.pkdx_id==o.pkdx_id&&r.favorites.splice(e,1)}),n.favorites=r.favorites},r.showModal=function(o){r.modal=o,r.modal.active=!0},r.hideModal=function(o){var t=angular.element(o.target);(t.hasClass("popup-wrap")||t.hasClass("close"))&&(r.modal.active=!1)},r.selectItems=function(o){return o.forEach(function(o){return o.types.name==r.type&&pokemon})},r.selectType=function(o){r.type=o},t.$on("$stateChangeSuccess",function(o,t,e,n,a){r.type=""})}]),pokemonsCtrl=pokemon.controller("pokemonsCtrl",["$scope","$http","$localStorage",function(o,t,e){const n=this,r="http://pokeapi.co/api/v1/";t.get(r+"pokemon/?limit=12").success(function(o){console.log("data",o),n.pokemons=o.objects}).then(function(){n.favorites.forEach(function(o){n.pokemons.forEach(function(t){t.pkdx_id==o.pkdx_id&&(t.favorite=!0)})})}),n.favorites=e.favorites||[]}]),favoritesCtrl=pokemon.controller("favoritesCtrl",["$scope","$localStorage",function(o,t){const e=this;e.pokemons=t.favorites||[]}]);
+const pokemon = angular.module('pokemon', [
+		'ui.router',
+		'ngStorage'
+	])
+	.config(['$stateProvider', '$urlRouterProvider',
+		function($stateProvider, $urlRouterProvider) {
+			$stateProvider
+				.state('pokemons', {
+					url: '/pokemons',
+					templateUrl: 'templates/pokemons.html',
+					controller: 'pokemonsCtrl',
+					controllerAs: 'pokemons'
+				})
+				.state('favorites', {
+					url: '/pokemons/favorites',
+					templateUrl: 'templates/favorites.html',
+					controller: 'favoritesCtrl',
+					controllerAs: 'pokemons'
+				});
+
+			$urlRouterProvider.otherwise('/pokemons');
+		}
+	])
+
+const mainCtrl = pokemon.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$localStorage', function($scope, $rootScope, $http, $localStorage) {
+	const vm = this;
+	vm.options = ["Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric", "Ice", "Dragon", "Dark", "Fairy", "Unknown", "Shadow", "Psychic"];
+	vm.type = "";
+	vm.favorites = $localStorage.favorites || [];
+
+	vm.addToFavorites = function(pokemon) {
+		pokemon.favorite = true;
+		vm.favorites.push(pokemon);
+		$localStorage.favorites = vm.favorites;
+	}
+
+	vm.removeFromFavorites = function(pokemon) {
+		pokemon.favorite = false;
+
+		vm.favorites.forEach(function(element, index) {
+			if (element.pkdx_id == pokemon.pkdx_id) {
+				vm.favorites.splice(index, 1);
+			}
+		});
+
+		$localStorage.favorites = vm.favorites;
+	}
+
+	vm.showModal = function(pokemon) {
+		vm.modal = pokemon;
+		vm.modal.active = true;
+	}
+
+	vm.hideModal = function(e) {
+		var target = angular.element(e.target);
+		if (target.hasClass('modal-wrap') || target.hasClass('close') || e.keyCode === 27) {
+			vm.modal.active = false;
+		}
+	}
+
+	vm.selectType = function(type) {
+		vm.type = type;
+	}
+
+	$rootScope.$on('$stateChangeSuccess', resetType());
+
+	function resetType() {
+		vm.type = "";
+	}
+}])
+
+const pokemonsCtrl = pokemon.controller('pokemonsCtrl', ['$http', '$localStorage',
+	function($http, $localStorage) {
+
+		const vm = this;
+		const baseUrl = 'http://pokeapi.co/api/v1/';
+		vm.preloader = true;
+		vm.favorites = $localStorage.favorites || [];
+
+
+
+		$http
+			.get(baseUrl + "pokemon/?limit=" + 12).success(function(data) {
+				vm.pokemons = data.objects;
+			})
+			.then(function() {
+				compareFavorites();
+				vm.preloader = false;
+			}, function() {
+				$http.get('./js/beckup.json').success(function(data) {
+					vm.pokemons = data;
+				})
+				vm.preloader = false;
+				vm.error = true;
+			});
+
+		function compareFavorites() {
+			vm.favorites.forEach(function(fav) {
+				vm.pokemons.forEach(function(pok) {
+					if (pok.pkdx_id == fav.pkdx_id) {
+						pok.favorite = true;
+					}
+				});
+			});
+		}
+	}
+])
+
+const favoritesCtrl = pokemon.controller('favoritesCtrl', ['$localStorage', function($localStorage) {
+
+	const vm = this;
+
+	vm.pokemons = $localStorage.favorites || [];
+}])

@@ -1,4 +1,4 @@
-const favoritesCtrl = pokemon.controller('favoritesCtrl', ['$scope', '$localStorage', function($scope, $localStorage) {
+const favoritesCtrl = pokemon.controller('favoritesCtrl', ['$localStorage', function($localStorage) {
 
 	const vm = this;
 
